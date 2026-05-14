@@ -1,5 +1,5 @@
 import "dotenv/config";
-import restify from "restify";
+import express from "express";
 import { BotFrameworkAdapter } from "botbuilder";
 import { TeamsExpensePresenterBot } from "./teams-bot.js";
 
@@ -16,21 +16,25 @@ adapter.onTurnError = async (context, error) => {
 };
 
 const bot = new TeamsExpensePresenterBot();
-const server = restify.createServer();
+const app = express();
 
-server.use(restify.plugins.bodyParser());
+app.use(express.json());
 
-server.post("/api/messages", async (req, res) => {
-  await adapter.processActivity(req, res, async (context) => {
-    await bot.run(context);
-  });
+app.post("/api/messages", async (req, res) => {
+  try {
+    await adapter.processActivity(req, res, async (context) => {
+      await bot.run(context);
+    });
+  } catch (error) {
+    console.error("[processActivity]", error);
+    res.sendStatus(500);
+  }
 });
 
-server.get("/health", async (_req, res) => {
-  res.send({ ok: true, service: "teams-expense-presenter-agent" });
+app.get("/health", (_req, res) => {
+  res.json({ ok: true, service: "teams-expense-presenter-agent" });
 });
 
-server.listen(port, () => {
+app.listen(port, () => {
   console.log(`Teams Expense Presenter Agent listening on http://localhost:${port}`);
 });
-
