@@ -1,0 +1,59 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/teams/v1.17/MicrosoftTeams.schema.json",
+  "manifestVersion": "1.17",
+  "version": "1.0.0",
+  "id": "00000000-0000-0000-0000-000000000000",
+  "developer": {
+    "name": "Project Teams",
+    "websiteUrl": "https://example.com",
+    "privacyUrl": "https://example.com/privacy",
+    "termsOfUseUrl": "https://example.com/terms"
+  },
+  "name": {
+    "short": "Expense Presenter",
+    "full": "Teams Expense Presenter Agent"
+  },
+  "description": {
+    "short": "Presents and answers questions about an expense splitter.",
+    "full": "A Microsoft Teams agent that leads an expense splitter code walkthrough, answers audience questions, and can be extended with Graph calling and speech services."
+  },
+  "icons": {
+    "outline": "outline.png",
+    "color": "color.png"
+  },
+  "accentColor": "#2563EB",
+  "bots": [
+    {
+      "botId": "00000000-0000-0000-0000-000000000000",
+      "scopes": ["team", "groupchat", "personal"],
+      "supportsFiles": false,
+      "isNotificationOnly": false,
+      "commandLists": [
+        {
+          "scopes": ["team", "groupchat", "personal"],
+          "commands": [
+            {
+              "title": "start presentation",
+              "description": "Start the codebase walkthrough."
+            },
+            {
+              "title": "explain architecture",
+              "description": "Explain the project architecture."
+            },
+            {
+              "title": "explain expense splitter",
+              "description": "Explain the expense splitting algorithm."
+            },
+            {
+              "title": "demo split",
+              "description": "Show a sample expense split."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "permissions": ["identity", "messageTeamMembers"],
+  "validDomains": ["token.botframework.com"]
+}
+
